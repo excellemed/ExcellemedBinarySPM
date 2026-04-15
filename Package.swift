@@ -13,9 +13,9 @@ let package = Package(
     .library(name: "ExRefresh", targets: ["ExRefresh", "ExRefreshShim"]),
     .library(name: "HttpKit", targets: ["HttpKit", "HttpKitShim"]),
     .library(name: "WebSocket", targets: ["WebSocket", "WebSocketShim"]),
-    .library(name: "CombineCocoa", type: .dynamic, targets: ["CombineCocoa"]),
+    .library(name: "CombineCocoa", targets: ["CombineCocoa"]),
     .library(name: "Lottie", targets: ["Lottie", "LottieShim"]),
-    .library(name: "ComponentKit", type: .dynamic, targets: ["ComponentKit"]),
+    .library(name: "ComponentKit", targets: ["ComponentKit"]),
     .library(name: "ExcellemedKit", targets: ["ExcellemedKit"]),
   ],
   targets: [
