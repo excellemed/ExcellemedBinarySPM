@@ -21,13 +21,13 @@ let package = Package(
   targets: [
     .binaryTarget(
       name: "Algorithm",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/Algorithm.zip",
-      checksum: "d8eca1bdd6bba9c264c66522559a3895b0d00eaa8dc97036160f21648c313018"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/Algorithm.xcframework.zip",
+      checksum: "c634a9612f11c7cb565bd191cc3c9746aef137fa3ab14effbdcad521556a418d"
     ),
     .binaryTarget(
       name: "RustXcframework",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/RustXcframework.zip",
-      checksum: "b1b68d6faefe8e308392a90fdd493492a280c52153d6ea504255461b1df47fe0"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/RustXcframework.zip",
+      checksum: "5ca2d7257a5cc290e1dd636a1d2cc4fcb9d3d6af1abeee3a06ee17e395ae2aff"
     ),
     .target(
       name: "Runtime",
@@ -41,33 +41,33 @@ let package = Package(
     ),
     .binaryTarget(
       name: "ToolKit",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/ToolKit.zip",
-      checksum: "9f88cdb77df052189df1483efe8451235836d0f6f5f292210818e8e0c27c5391"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/ToolKit.zip",
+      checksum: "40fcef426844065caed535bb15575e476a4cf19081f07f3e2188dad609e486f0"
     ),
     .binaryTarget(
       name: "BLEKit",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/BLEKit.zip",
-      checksum: "64b6fb629bb30dd4ac8501b46ff3aaade855fa8d000bf1b06d11f93c6d2e5495"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/BLEKit.zip",
+      checksum: "89bfa090bfffa6e478839f1e8483323881637be4a8b7cc5bcffa221c797d5300"
     ),
     .binaryTarget(
       name: "ChartKit",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/ChartKit.zip",
-      checksum: "86d1ab7df5632f1807887270773bdec18150212a47a530795c15913587e1ff16"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/ChartKit.zip",
+      checksum: "8ad650a9d5128c55b062ae2a29f91538f79787a8bc22f1876c0fd5f5da08799f"
     ),
     .binaryTarget(
       name: "ExRefresh",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/ExRefresh.zip",
-      checksum: "34c4030ec267b4e9daaf8fd506860c00b9870dc8a63746e3e977ab6ff86641ba"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/ExRefresh.zip",
+      checksum: "ea94412c47a86b4e394073169c6111009c84f057209e58c177636e6f52b81e4e"
     ),
     .binaryTarget(
       name: "HttpKit",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/HttpKit.zip",
-      checksum: "60ef5761c345583a6c4f692a83870b735bcdec1d5fa23b2bbb98a648fc7a69af"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/HttpKit.zip",
+      checksum: "25c3eacc7fb9f40d2ca91e029c261126f196c2de3b55901c5e1b1dd3a0cd079a"
     ),
     .binaryTarget(
       name: "WebSocket",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/WebSocket.zip",
-      checksum: "56fe4fb59969bef5fc607b1d3ec835b7587701759106b05d62107076db1c900b"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/WebSocket.zip",
+      checksum: "dcf7573da68bd90c25ee0a4a9ca1c5d54493567b26cbe0cf5a9204a4a0c197ee"
     ),
     .target(
       name: "CombineCocoa",
@@ -76,8 +76,8 @@ let package = Package(
     ),
     .binaryTarget(
       name: "Lottie",
-      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.0/Lottie.zip",
-      checksum: "dcebca8f7fd8ef8010b633c3231f4ea1020c0f74808829a33e9d552c93237d46"
+      url: "https://github.com/excellemed/ExcellemedKitXcframework/releases/download/v1.0.1/Lottie.zip",
+      checksum: "ca33b8d77e22f8343c05b1a4dc082c7b206021d91e6ac45293cd756667212041"
     ),
     .target(
       name: "ComponentKit",
