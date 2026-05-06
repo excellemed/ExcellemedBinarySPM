@@ -2,68 +2,16 @@
 
 import UIKit
 import Combine
+import ToolKit
 
-/// **时间轴数据显示协议**
-///
-/// 任何需要在 `HorizontalWrapperBar` 中显示的数据模型都必须遵守此协议。
-/// 组件仅依赖 `time` 属性来计算圆点在进度条上的位置。
-///
-/// **使用示例：**
-/// ```swift
-/// extension DietRecord: TimelineDataDisplayable {}
-/// ```
 public nonisolated protocol TimelineDataDisplayable: Codable {
   var time: TimeInterval { get }
   var id: String? { get }
 }
 
-/// 一个用于可视化单日事件分布的水平时间轴组件。
-///
-/// `HorizontalWrapperBar` 在水平轨道上绘制一系列圆点来表示事件发生的时间。
-/// 组件左侧包含一个指示图标，右侧为时间轴轨道。它支持交互功能，用户点击圆点时可弹出气泡显示详情。
-///
-/// ## 布局注意事项
-/// 由于此组件继承自 `UIView` 且未定义固有内容大小（Intrinsic Content Size），
-/// **在使用 AutoLayout 时，必须显式指定高度约束（建议 28pt - 32pt）。**
-///
-/// ## 使用示例
-///
-/// ```swift
-/// // 1. 初始化 (使用方形样式，圆角为 4)
-/// let bar = HorizontalWrapperBar<MyRecord>(
-///     icon: UIImage(named: "pill")!,
-///     color: .systemBlue,
-///     style: .square(4)
-/// )
-///
-/// // 2. 添加到视图并布局
-/// view.addSubview(bar)
-/// bar.snp.makeConstraints { make in
-///     make.left.right.equalToSuperview().inset(16)
-///     make.height.equalTo(28) // 必须设置高度
-/// }
-///
-/// // 3. 配置数据与交互
-/// bar.range = 0...24
-/// bar.data = myRecords
-///
-/// // 开启点击气泡交互
-/// bar.textProvider = { record in
-///     return "\(record.timeString): \(record.name)"
-/// }
-/// ```
 public final class HorizontalWrapperBar<T: TimelineDataDisplayable>: UIView {
-  
-  /// 定义组件的视觉样式，主要影响背景条的形状和布局结构。
   public enum Style {
-    /// 胶囊样式（默认）。
-    ///
-    /// 图标与时间轴包裹在同一个胶囊形背景中，整体感更强。
     case circle
-    /// 方形（圆角矩形）样式。
-    ///
-    /// 图标与时间轴背景分离，图标独立显示在左侧，时间轴为圆角矩形。
-    /// - Parameter radius: 背景条的圆角半径。
     case square(CGFloat)
   }
   
@@ -92,6 +40,7 @@ public final class HorizontalWrapperBar<T: TimelineDataDisplayable>: UIView {
       .first { $0.isKeyWindow }
   }
   
+  public var anchorDate: Date = .now { didSet { setNeedsLayout() } }
   public var range: ClosedRange<Int>? { didSet { setNeedsLayout() } }
   public var data: [T] = [] { didSet { setNeedsLayout() } }
   
@@ -101,24 +50,14 @@ public final class HorizontalWrapperBar<T: TimelineDataDisplayable>: UIView {
       if textProvider != nil { setupGesture() }
     }
   }
-  
-  // MARK: - Init
-  /// 创建一个新的水平时间轴组件。
-  ///
-  /// - Parameters:
-  ///   - icon: 显示在组件最左侧的图标。
-  ///     - Note: 无论选择何种样式，图标本身始终保持圆形显示。
-  ///   - color: 主题颜色。将应用于图标背景、时间轴圆点颜色。
-  ///   - style: 组件的布局样式，默认为 `.circle`。
-  ///     - `.circle`: 图标包含在胶囊背景内。
-  ///     - `.square(radius)`: 图标独立，背景条为指定圆角的矩形。
+
   public init(icon: UIImage, color: UIColor, style: Style = .circle) {
     self.style = style
     self.iconView = MutableColorIcon(icon)
     super.init(frame: .zero)
     setupUI(themeColor: color)
   }
-  
+
   @available(*, unavailable)
   required init?(coder: NSCoder) { fatalError() }
   
@@ -218,20 +157,13 @@ public final class HorizontalWrapperBar<T: TimelineDataDisplayable>: UIView {
   }
   
   private func calculateDateRange(lower: Int, upper: Int) -> (start: Date, end: Date)? {
-    let calendar = Calendar.current
-    let now = Date()
-    var components = calendar.dateComponents([.year, .month, .day], from: now)
-    components.hour = lower; components.minute = 0; components.second = 0
-    guard let startDate = calendar.date(from: components) else { return nil }
+    let anchor = anchorDate.ex.startOfDay
+    guard let startDate = anchor.ex.from(hm: (lower, 0)) else { return nil }
     let endDate: Date
     if upper == 24 {
-      if let tomorrow = calendar.date(byAdding: .day, value: 1, to: now),
-         let nextStart = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: tomorrow) {
-        endDate = nextStart
-      } else { return nil }
+      endDate = anchor.ex.add(.day(1))
     } else {
-      components.hour = upper
-      guard let date = calendar.date(from: components) else { return nil }
+      guard let date = anchor.ex.from(hm: (upper, 0)) else { return nil }
       endDate = date
     }
     return (startDate, endDate)
@@ -375,7 +307,6 @@ public extension Array where Element: TimelineDataDisplayable {
     let result = grouped.map { (_, records) -> Element in
       var base = records.first!
       
-      // 收集名字并过滤空值
       let names = records.compactMap { $0[keyPath: contentKey] }
         .filter { !$0.isEmpty }
       
